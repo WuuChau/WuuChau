@@ -1,0 +1,85 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> Visualisierung </title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/gauge.min.js"></script>  
+    
+    <link href="/css/style.css" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="wrap-body">
+        <div class="header">
+            <div class="logo">
+                <img src="/images/logo.png" alt="Company Logo">
+            </div>
+            <!-- <div class="banner text-right">
+                <img src="/images/header.png" alt="Encoder">
+            </div> -->
+        </div>
+   <!--     <p id="grad">°</p>
+     <p id="rpm">mm/s</p> 
+    -->
+       <!-- <div class="p1-rpm"> -->
+        <div class="gauge-container">    
+            <canvas data-type="radial-gauge"
+                    data-width="250"
+                    data-height="250"
+                    data-units="Speed [mm/s]"
+                    data-color-units="222"
+                    data-min-value="-200"
+                    data-max-value="200"
+                    data-major-ticks="-200, -150, -100, -50, 0, 50, 100, 150, 200"
+                    data-minor-ticks="5"
+                    data-value-box="true"
+                    data-highlights="false"
+                    data-color-plate="#cccaca"
+                    data-color-numbers="#222"
+                    data-color-minor-ticks="#222"
+                    data-color-major-ticks="#222"
+                    data-color-needle="#ff6400"
+                    data-font-value="led"
+                    data-animation-rule="linear"
+                    data-animation-duration="50"
+                    data-value-dec="1"
+                    data-animated-value="true"></canvas>
+        <!-- </div> -->
+        <!--<div class="container"> -->
+            <div class="circular-progress">
+                <div class="value-container"></div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <br><br>
+        <div class="p1-b">
+        <!--<a href="#" onclick="window.location = document.referrer;">Home</a>
+        -->
+        <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="Back" />
+        </div>
+        <br>
+        <div class="p1-dl">
+        <!--<iframe style="display:none" name="hidden-form"></iframe> 
+        -->
+        <form action="/download" method="POST"> 
+        <button type="submit">Download Messungen (.JSON)</button>
+        </form>
+        </div>
+    <br>
+        <div class="column2"> 
+            <p class="mb-1">  
+                <label class="mb-1"><strong> Fritz Kuebler GmbH</strong></label><br>
+                <label class="mb-1"> Engineering Solution Center Berlin</label><br>
+                <label class="mb-1"> Kienhorststraße. 56/58</label><br>
+                <label class="mb-1"> D-13403 Berlin</label><br>
+                <label class="mb-1"> Germany</label>
+            </p>
+                <p class="mt-3">
+                    <label class="mb-1 orgColor"><strong><a href="https://www.kuebler.com" target="_blank" rel="noopener noreferrer">www.kuebler.com</a></strong></label>
+                </p>
+        </div>
+ <script src="/index.js"></script>
+</body>
+</html>
