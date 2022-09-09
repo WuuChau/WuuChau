@@ -311,7 +311,7 @@ label {
 }
 /* Main css */
 .wrap-body {
-    max-width: 50%;
+    max-width: 60%;
     display: block;
     padding: 10px;
 }
@@ -319,7 +319,7 @@ label {
     border-bottom: 1px solid #ccc;
     float: left;
     margin-bottom: 7px;
-    width: 70%;
+    width: 65%;
 }
 .ProzessSteps li{
     display: inline-block;
@@ -348,7 +348,7 @@ label {
     border-bottom: 1px solid #ccc;
     margin-bottom: 8px;
     margin-top: 4px;
-    width: 100%;
+    width: 70%;
 }
 .Bottom-Line{
     border-bottom: 1px solid #ccc;
@@ -427,7 +427,7 @@ background-color: #fff;
 .column2 {
   float: left;
   padding-left: 20px;
-  padding-right: 350px;
+  padding-right:350px;
   padding-top:30px;
   background-color: #e4e4e4;
   position:absolute;
@@ -455,7 +455,7 @@ background-color: #fff;
 @media (min-width:320px)  {    
     .content {
         width: 98%;
-        padding: 0 15px;
+        padding: 0 5px;
     }
     .home-button{
        width:45%;
@@ -478,7 +478,7 @@ background-color: #fff;
         display: flex;
         padding: 5px 5px;
         margin-top: 15px;
-    }
+    } 
  }
 @media only screen and (max-width: 768px){
     .wrap-body{
@@ -508,6 +508,12 @@ background-color: #fff;
         min-height: auto; 
         padding: 20px 20px 0 20px;
     }
+   /* .column2 {
+        width: 82%;
+        min-height: auto;
+        padding: 20px 20px 0 20px;
+    }
+  */
     .btn-outline-primary{
         margin-right: 18px;
     }
@@ -529,6 +535,12 @@ background-color: #fff;
         width: 27.9%;
         min-height: 210px;
     }
+    /*
+    .column2{
+        width: 27.9%;
+        min-height:210px;
+    }
+    */
     .mr-0{
         margin-right: 0px;
         margin-left: 0px
@@ -555,6 +567,12 @@ background-color: #fff;
         width: 135%;
         min-height: 220px;
     }
+    /*
+    .column2{
+        width: 135%;
+        min-height: 220px;
+    }
+    */
     .mr-0{
         margin-right: 5px !important;
     }
@@ -566,6 +584,11 @@ background-color: #fff;
      .column{
         width: 29%;
      }
+     /*
+     .column2{
+        width: 29%;
+     }
+     */
      .mr-0{
         margin-right: 0px;
         margin-left: 0px
@@ -642,4 +665,9 @@ img.img.description
 button
 {
   float:left;
+}
+
+#btnshut {
+  margin-left: 250px;
+  margin-top: -290px;
 }

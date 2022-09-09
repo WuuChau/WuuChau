@@ -7,6 +7,7 @@ var channel = can.createRawChannel("can0",true);
 var fs = require('fs')
 var dirname = require('path');
 var ps = require('python-shell');
+var exec = require('child_process').exec; //for shutdown raspi
 
 var canData ={};
 var maxInc = 16000;
@@ -16,6 +17,7 @@ var rpm;
 var ena;
 var microSteps = 3200;
 var startLogging;
+var i;
 
 //return middleware that only parses urlencoded bodies and only looks at request where the conten-type header matchtes the type option i.e. /update
 app.use(express.urlencoded({extendend: true}));
@@ -51,51 +53,68 @@ app.post('/update', function(req,res){
     });
     
     //log data on button 
-    console.log("logging")
-    fs.unlinkSync("./data.json"); //delete old data.json file
-    clearInterval(startLogging); //stop previous setInterval 
+    console.log('logging')
+    //delete old data.json file
+    fs.unlink('./data.json',function(err){
+    	if (err) throw err;
+    	console.log('File deleted!')
+    }); 
+    clearInterval(startLogging)
+    i=0 
     //wait for some time, to not lot the ramp
     setTimeout(function(){
     //creatin new.json file with canData data
-       startLogging = setInterval(() => {
-       var logger = fs.createWriteStream('data.json', {flags:'a'}); //flags: 'a' => appending (old data will be preserved)             
-       logger.write(JSON.stringify(canData, null, "\t")); //"\t" = Absatz nach jedem EIntrag
-      },5) //logs every 5ms
-    },1000) //starts logging after 2sec
+      startLogging = setInterval(() => {
+       if (i < 5000) { 
+         i++
+         var logger = fs.createWriteStream('data.json', {flags:'a'}); //flags: 'a' => appending (old data will be preserved)             
+         logger.write(JSON.stringify(canData, null, "\t")); //"\t" = Absatz nach jedem EIntrag
+       }
+       else {
+        clearInterval(startLogging)
+       }
+      },10); //logs every 10ms
+    },2000); //starts logging after 2sec
 
-}) 
+}); 
 
 //download data.json on button
 app.post('/download', function(req,res){
     const file = `${__dirname}/data.json`;
     res.download(file);
-})
+});
+
+//shutdown Raspberry
+app.post('/shutdown', function(req,res){
+    exec('shutdown now -h')
+});
+
 
 //ws: catch anyone who tries to connect
 //accept connection
 io.on('connection', function(client){
    // console.log('Client Connected!')
-})
+});
 
 setInterval(() => { // call a function at a specified interval until clearInterval
     io.emit('data', canData) // 'data = topic um drauf  zuzugreifen  , output canData, 
-    },50)  //sending canData  every 50 millisecond from a socket -> need to put it in index.js
+    },50);  //sending canData  every 50 millisecond from a socket -> need to put it in index.js
  
 //listen to messages
 channel.addListener("onMessage",function(msg){   //Log any Message
     canData.Inkremente = msg.data.readUIntBE(1,1) << 8 | msg.data.readUIntBE(0,1)
-    console.log(msg) // candump
+ // console.log(msg) // candump
     canData.Grad = canData.Inkremente / maxInc * 360; //in Degree, 16000 through input
     canData.Speed = msg.data.readUIntBE(5,1) << 8 | msg.data.readUIntBE(4,1)  
     if((canData.Speed & 0x8000) > 0) //ist MSB gesetzt? 
     {
         canData.Speed = (canData.Speed - 0x10000);
     }
-    console.log(canData)
+ // console.log(canData)
  // console.log(maxInc)
  // console.log(dir)
  // console.log(freq)
-})
+});
 
 channel.start()
 

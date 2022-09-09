@@ -24,5 +24,5 @@ function onDOMReadyHandler(event){
       
        valueContainer.textContent = "Position: " +  `${data.Grad.toFixed(2)}°`; //`${}` = Template String   `Platzhalter`
        progressBar.style.background = `conic-gradient(#ff6400 ${data.Grad.toFixed(2)}deg, #f5a069 ${data.Grad.toFixed(2)}deg`;
-    })
+    });
 }

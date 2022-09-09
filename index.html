@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    
-    <title>Encoder Prüfstand </title>
+    <!-- controls the size of the viewport, dynamic window sizing-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <title>Encoder Prüfstand - Kübler Group </title>
     <!-- <script ...> to embed executable code or data -->
     <script src="/socket.io/socket.io.js"></script> <!-- required socket.io for websockets -->
     <script src="/scripts/gauge.min.js"></script>  <!-- required gauge.min.js for gauge visualization -->   
@@ -21,37 +23,40 @@
             <img src="images/header.png" alt="Encoder">
             </div> -->
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="content">
-        <div class="space10"><div>
-        <h2> Encoder Prüfstand </h2>
-        <div class="space5"></div>
-        <iframe style="display:none" name="hidden-form"></iframe>
-        <p> Geben Sie die maximalen Messschritte pro Umdrehung Ihres Drehgebers an.</p>
-        <form action="/update" method="POST" target="hidden-form">
-        <input type="number" id="inc" name="inc" placeholder="Messschritte"  onkeydown="return (event.keyCode!=13)" required style="width:125px"/><!-- required = u have to enter a value, onkeydown=".. = Enter disabled -->
-        <br><p> Geben Sie <u>entweder</u> Frequenz <u>oder</u> Geschwindigkeit an. </p>
-        <!--<p><strong>Max. Frequenz 53000 Hz / Max. Geschwindigkeit 1000 rpm</strong> </p>
-        -->
-        <input type="number" id="freq" name="freq" placeholder="Frequenz"  onkeydown="return(event.keyCode!=13)" style="width:125px"/> <b>[Hz]</b> &nbsp; oder &nbsp; 
-        <input type="number" id="rpm" name="rpm" placeholder="Geschwindigkeit" onkeydown="return(event.keyCode!=13)" style="width:125px;"/> <b>[rpm]</b>
-        <br><p> Wählen Sie eine Drehrichtung. </p>
-        <input type="radio" id="rechts" name="dir" value="Rechts" required/> Rechts&nbsp; &nbsp; <!-- &nbsp; = extra space in html -->
-        <input type="radio" id="links" name="dir" value="Links" required/> Links
-        <br><br><button type="submit" id="btn" name="btn" value="1">Start</button>
-        <!--
-        <button type="submit" onclick="location.href='canvas.html';"> Visualisierung </button> 
-        -->
-        <button type="submit" id="btn2" name="btn" value="0">Stop</button>
-        </form>
-        <button type="submit" onclick="location.href='canvas.html';"> Visualisierung </button>           
-        <br>
-        <p class="output" id="maxinc" ></p>
-        <p class="output" id="outfreq" ></p>
-        <p class="output" id="outrpm" ></p>
-        <p class="output" id="direction"></p>
-        <script>
+    
+        <div class="clearfix"></div>
+        <div class="content">
+         <div class="space10"><div>
+         <h2> Encoder Prüfstand </h2>
+         <div class="space5"></div>
+         <iframe style="display:none" name="hidden-form"></iframe>
+         <p> Geben Sie die maximalen Messschritte pro Umdrehung Ihres Drehgebers an.</p>
+         <form action="/update" method="POST" target="hidden-form">
+         <input type="number" id="inc" name="inc" placeholder="Messschritte"  onkeydown="return (event.keyCode!=13)" required style="width:115px"/><!-- required = u have to enter a value, onkeydown=".. = Enter disabled -->
+         <br><p> Geben Sie entweder Frequenz oder Geschwindigkeit an. </p>
+         <!--<p><strong>Max. Frequenz 53000 Hz / Max. Geschwindigkeit 1000 rpm</strong> </p>
+         -->
+         <input type="number" id="freq" name="freq" placeholder="Frequenz" onkeydown="return(event.keyCode!=13)" style="width:115px"/><b> [Hz]</b>&nbsp;oder&nbsp;
+         <input type="number" id="rpm" name="rpm" placeholder="Geschwindigkeit" onkeydown="return(event.keyCode!=13)" style="width:115px;"/><b> [rpm]</b>
+         <br><p> Wählen Sie eine Drehrichtung. </p>
+         <input type="radio" id="rechts" name="dir" value="Rechts" required/> Rechts&nbsp; &nbsp; <!-- &nbsp; = extra space in html -->
+         <input type="radio" id="links" name="dir" value="Links" required/> Links
+         <br><button type="submit" id="btn" name="btn" value="1">Start</button>
+         <!--
+         <button type="submit" onclick="location.href='canvas.html';"> Visualisierung </button> 
+         -->
+         <button type="submit" id="btn2" name="btn" value="0">Stop</button>
+         </form>
+         <button type="submit" onclick="location.href='canvas.html';"> Visualisierung </button>           
+         <form action="/shutdown" method="POST" target="hidden-form">
+         <button id="btnshut" type="submit">Shutdown Pi</button>
+         </form>
+         <br>
+         <p class="output" id="maxinc" ></p>
+         <p class="output" id="outfreq" ></p>
+         <p class="output" id="outrpm" ></p>
+         <p class="output" id="direction"></p>
+         <script>
            const txt =  document.getElementById('inc');
            const btn =  document.getElementById('btn');
            const out =	document.getElementById('maxinc');
@@ -63,10 +68,10 @@
            let txtout3;        
            var microSteps = 3200;
            //myFun()
-         /*  out.innerHTML ="<br>" + "Maximale Messschritte: " + "<strong>" + txt.value + " Schritte! </strong>";
+           /*  out.innerHTML ="<br>" + "Maximale Messschritte: " + "<strong>" + txt.value + " Schritte! </strong>";
            out2.innerHTML ="Aktuelle Frequenz: " + "<strong>" + txtout2.toFixed(2) + "Hz </strong>";      
            out3.innerHTML ="Aktuelle Geschwindigkeit: " + "<strong>" + txtout3 + " rpm </strong>";
-         */ 
+           */ 
            function myFun() {
                out.innerHTML ="<br>" + "Maximale Messschritte: " + "<strong>" + txt.value + " Schritte! </strong>";
                
@@ -100,24 +105,24 @@
            
            btn.addEventListener('click', myFun);
                      
-        </script>
-    </div> <!-- end content -->
-    
-    <br>
-    <div class="column">
-        <p class="mb-1">
+         </script>
+        </div> <!-- end content -->
+        <br>
+        <div class="column">
+         <p class="mb-1">
             <label class="mb-1"><strong> Fritz Kuebler GmbH</strong></label><br>
             <label class="mb-1"> Engineering Solution Center Berlin</label><br>
             <label class="mb-1"> Kienhorststraße. 56/58</label><br>
             <label class="mb-1"> D-13403 Berlin</label><br>
             <label class="mb-1"> Germany</label>
-        </p>
-        <p class="mt-3">
+         </p>
+         <p class="mt-3">
             <!-- href= set URL to link target= tells browser to open new tab/window rel= prevent possible malicious attacks -->
             <label class="mb-1 orgColor"><strong><a href="https://www.kuebler.com" target="_blank" rel="noopener noreferrer">www.kuebler.com</a></strong></label>
-        </p>
-     </div>    
+         </p>
+        <br>
+        </div>    
    <!-- <script src="/index.js"></script>--> <!-- if uwant to run a javascript in a front end, u want to run it when the webpage is loaded -- 
-
+   </div>
 </body>
 </html>    
